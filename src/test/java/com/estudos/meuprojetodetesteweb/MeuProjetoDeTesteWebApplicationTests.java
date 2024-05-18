@@ -27,13 +27,12 @@ class MeuProjetoDeTesteWebApplicationTests {
 
 	// Cenário de Sucesso
 	/*
-		(GIVEN) DADO um cliente com nome e cpf válidos
-		(WHEN) QUANDO enviar os dados pro sistema (POST)
-		(THEN) ENTÃO o cadastro será realizado com sucesso
-		(AND) E retornar o codigo http 201
-		(AND) E com header localization com a url de consulta do cliente cadastrado.
-		(AND) E retorna o cliente criado no corpo da mensagem
-
+	 *	(GIVEN) DADO um cliente com nome e cpf válidos
+	 *	(WHEN) QUANDO enviar os dados pro sistema (POST)
+	 *	(THEN) ENTÃO o cadastro será realizado com sucesso
+	 *	(AND) E retornar o codigo http 201
+	 *	(AND) E com header localization com a url de consulta do cliente cadastrado.
+	 *	(AND) E retorna o cliente criado no corpo da mensagem
 	 */
 	@Test
 	public void dadoUmClienteComDadosValidosEntaoOClienteDeveSerSalvo(){
@@ -57,13 +56,14 @@ class MeuProjetoDeTesteWebApplicationTests {
 
 
 	/*
-	* // Validar falhar ao cadastrar cliente quando informar um cpf invalido
-		DADO que informe todas as informações obrigatórias
-		QUANDO submeter minha solicitação via POST
-		MAS informar como cpf um valor com 13 caracteres
-		ENTÃO o cadastro deve falhar
-		(AND) E retornar o codigo http 400 (BAD REQUEST)
-	* */
+	 *  Validar falhar ao cadastrar cliente quando informar um cpf invalido
+	 *	(GIVEN) DADO que informe todas as informações obrigatórias
+	 *	(WHEN) QUANDO submeter minha solicitação via POST
+	 *	(BUT) MAS informar como cpf um valor com 13 caracteres
+	 *	(THEN) ENTÃO o cadastro deve falhar
+	 *	(AND) E retornar o codigo http 400 (BAD REQUEST)
+	 *  (AND) E deve retonar a mensagem CPF Invalido no corpo da mensagem
+	 * */
 	@Test
 	public void dadoUmClienteComCamposPreenchidosPoremCpfInvalidoEntaoDeveRetonarErro(){
 		Customer customer = new Customer();
@@ -76,7 +76,8 @@ class MeuProjetoDeTesteWebApplicationTests {
 					.when()
 						.request("POST", "/customer")
 					.then()
-						.statusCode(HttpStatus.BAD_REQUEST.value());
+						.statusCode(HttpStatus.BAD_REQUEST.value())
+						.body(equalTo("CPF Invalido"));
 	}
 
 }
